@@ -13,30 +13,12 @@ class PinchTrial: Trial {
     
     var targetScale: CGFloat = 1.0
     var resultScale: CGFloat = 1.0
-
-    var coreMotionAccelerometer = CMAcceleration(x: 0, y: 0, z: 0)
-    var coreMotionGyroscope = CMRotationRate(x: 0, y: 0, z: 0)
-    var coreMotionDeviceMotion = CMAcceleration(x: 0, y: 0, z: 0)
-    var coreMotionActivity = CMMotionActivity()
     
     override init(trial: ORKTouchAbilityTrial) {
         super.init(trial: trial)
         if let trial = trial as? ORKTouchAbilityPinchTrial {
             self.targetScale = trial.targetScale
             self.resultScale = trial.resultScale
-
-            //SYENNY-NOTE: Add accelerometer and gyroscope
-            self.coreMotionAccelerometer = trial.coreMotionAccelerometer
-            self.coreMotionGyroscope =  trial.coreMotionGyroscope
-            self.coreMotionDeviceMotion = trial.coreMotionDeviceMotion
-            trial.motionActivityManager.startActivityUpdates(to: OperationQueue.main) { [weak self] (activity) in
-                guard let activity = activity else { return }
-
-                self?.coreMotionActivity = activity
-            }
-            NSLog("Acceleration in PinchTrial, x: %f y: %f z: %f", self.coreMotionAccelerometer.x, self.coreMotionAccelerometer.y, self.coreMotionAccelerometer.z)
-            NSLog("Gyroscope in PinchTrial, x: %f y: %f z: %f", self.coreMotionGyroscope.x, self.coreMotionGyroscope.y, self.coreMotionGyroscope.z)
-            NSLog("Device Motion in PinchTrial, x: %f y: %f z: %f", self.coreMotionDeviceMotion.x, self.coreMotionDeviceMotion.y, self.coreMotionDeviceMotion.z)
         }
     }
     

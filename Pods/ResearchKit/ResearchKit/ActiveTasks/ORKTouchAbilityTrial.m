@@ -35,11 +35,9 @@
 #import "ORKTouchAbilityGestureRecoginzerEvent.h"
 
 #import "ORKHelpers_Internal.h"
-#import <CoreMotion/CoreMotion.h>
+
 
 @implementation ORKTouchAbilityTrial
-
-CMMotionManager *motionManager;
 
 + (BOOL)supportsSecureCoding {
     return YES;
@@ -59,7 +57,6 @@ CMMotionManager *motionManager;
         ORK_DECODE_OBJ(aDecoder, endDate);
         ORK_DECODE_OBJ(aDecoder, tracks);
         ORK_DECODE_OBJ(aDecoder, gestureRecognizerEvents);
-        motionManager = [[CMMotionManager alloc] init];
     }
     return self;
 }
@@ -70,8 +67,6 @@ CMMotionManager *motionManager;
     trial.endDate = [self.endDate copy];
     trial.tracks = [self.tracks copy];
     trial.gestureRecognizerEvents = [self.gestureRecognizerEvents copy];
-    trial.coreMotionAccelerometer = self.coreMotionAccelerometer;
-    trial.coreMotionGyroscope = self.coreMotionGyroscope;
     return trial;
 }
 
@@ -125,43 +120,6 @@ CMMotionManager *motionManager;
             self.endDate,
             @(self.tracks.count),
             @(self.gestureRecognizerEvents.count)];
-}
-
- // SYENNY-Note: Add the accelerometer and gyroscope in every trial
-- (CMAcceleration)coreMotionAccelerometer {
-//    motionManager.deviceMotionUpdateInterval = 0.5;
-    if (motionManager.accelerometerAvailable) {
-        [motionManager startAccelerometerUpdates];
-        CMAcceleration acceleration = motionManager.accelerometerData.acceleration;
-        NSLog(@"Acceleration in Trial, x: %f y: %f z: %f", acceleration.x, acceleration.y, acceleration.x);
-        return acceleration;
-    }
-}
-
-- (CMRotationRate)coreMotionGyroscope {
-    if (motionManager.gyroAvailable) {
-        [motionManager startGyroUpdates];
-        CMRotationRate rotationRate = motionManager.gyroData.rotationRate;
-        NSLog(@"Gyroscope in Trial, x: %f y: %f z: %f", rotationRate.x, rotationRate.y, rotationRate.x);
-        return rotationRate;
-    }
-}
-
-- (CMAcceleration)coreMotionDeviceMotion {
-    if (motionManager.deviceMotionAvailable) {
-        [motionManager startDeviceMotionUpdates];
-        CMDeviceMotion *deviceMotion = motionManager.deviceMotion;
-        NSLog(@"Device Motion in Trial, x: %f y: %f z: %f", deviceMotion.userAcceleration.x, deviceMotion.userAcceleration.y, deviceMotion.userAcceleration.x);
-        return deviceMotion.userAcceleration
-        ;
-    }
-}
-
-- (CMMotionActivityManager *)motionActivityManager {
-    if (CMMotionActivityManager.isActivityAvailable) {
-        CMMotionActivityManager *motionActivityManager = [[CMMotionActivityManager alloc] init];
-        return motionActivityManager;
-    }
 }
 
 @end

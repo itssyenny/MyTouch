@@ -15,7 +15,7 @@ class HomeViewController: SessionDetailViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = NSLocalizedString("NAVIGATION_TITLE_HOME", comment: "")
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: NSLocalizedString("BUTTON_NEW_TEST", comment: ""),
@@ -74,10 +74,12 @@ class HomeViewController: SessionDetailViewController {
     }
     
     @objc private func handleNewTestButton(sender: UIBarButtonItem) {
+        homeTabBarController.modalPresentationStyle = .fullScreen
         homeTabBarController.presentSurveyAndActivity()
     }
     
     @objc private func handleStateViewButton(sender: UIButton) {
+        homeTabBarController.modalPresentationStyle = .fullScreen
         homeTabBarController.presentSurveyAndActivity()
     }
     

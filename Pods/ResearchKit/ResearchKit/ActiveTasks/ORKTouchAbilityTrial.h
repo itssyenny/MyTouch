@@ -31,7 +31,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ORKDefines.h"
-#import <CoreMotion/CoreMotion.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -46,10 +45,6 @@ ORK_CLASS_AVAILABLE
 
 @property (nonatomic, readonly) NSArray<ORKTouchAbilityTrack *> *tracks;
 @property (nonatomic, readonly) NSArray<ORKTouchAbilityGestureRecoginzerEvent *> *gestureRecognizerEvents;
-@property (nonatomic, assign) CMAcceleration coreMotionAccelerometer;
-@property (nonatomic, assign) CMRotationRate coreMotionGyroscope;
-@property (nonatomic, assign) CMAcceleration coreMotionDeviceMotion;
-@property (nonatomic, assign) CMMotionActivityManager *motionActivityManager;
 
 @end
 
